@@ -1,0 +1,43 @@
+
+---
+
+### `.gitignore`
+
+```gitignore
+# Python cache and environment files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# VS Code settings
+.vscode/
+
+# IDE/editor files
+*.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Distribution/build files
+build/
+dist/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest cache
+.pytest_cache/
+
+# Uvicorn reload files
+reload/
