@@ -8,14 +8,17 @@ import logging
 logger = logging.getLogger("main")
 
 
-def get_all_classes_with_timezone(tz: str) -> List[ClassResponse]:
-    try:
-        return [convert_to_timezone(c, tz) for c in classes]
-    except Exception as e:
-        logger.error(f"Timezone conversion error: {str(e)}")
-        raise HTTPException(status_code=400, detail="Invalid timezone")
 
 def get_classes_service(tz: str = "UTC") -> list[ClassResponse]:
+    """
+    Converts all class times to the given timezone and returns class data.
+
+    Args:
+        tz (str): Timezone string (e.g., 'Asia/Kolkata').
+
+    Returns:
+        List of ClassResponse objects with localized times.
+    """
     from seed_data import classes
 
     converted_classes = []
@@ -37,6 +40,18 @@ def get_classes_service(tz: str = "UTC") -> list[ClassResponse]:
 
 
 def create_booking(booking: BookingRequest) -> BookingResponse:
+    """
+    Books a class for a user if slots are available.
+
+    Args:
+        booking (BookingRequest): The booking request data.
+
+    Returns:
+        BookingResponse: The booking confirmation.
+
+    Raises:
+        HTTPException: If class is not found or no slots are available.
+    """
     for c in classes:
         if c["id"] == booking.class_id:
             # Check if slots are available
@@ -60,6 +75,18 @@ def create_booking(booking: BookingRequest) -> BookingResponse:
 
 
 def get_bookings_by_email(client_email: str) -> List[BookingResponse]:
+    """
+    Retrieves all bookings made by a specific email.
+
+    Args:
+        client_email (str): The client's email.
+
+    Returns:
+        List[BookingResponse]: List of booking objects.
+
+    Raises:
+        HTTPException: If no bookings are found for the email.
+    """
     filtered = [BookingResponse(**b) for b in bookings if b["client_email"] == client_email]
     if not filtered:
         raise HTTPException(status_code=404, detail="No bookings found for this email")

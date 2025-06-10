@@ -1,26 +1,50 @@
-# 🏋️‍♀️ Fitness Class Booking API
+# 🧘‍♀️ Fitness Studio Booking API
 
-A simple FastAPI project to manage fitness class bookings. Built with Python and FastAPI, it supports viewing classes, booking slots, and viewing your own bookings — all stored in-memory.
+A lightweight, timezone-aware Booking API for a fitness studio, built using **FastAPI**.
+
+---
+
+## 📚 Table of Contents
+
+- [🚀 Features](#-features)
+- [📦 Tech Stack](#-tech-stack)
+- [🛠️ Setup Instructions](#️-setup-instructions)
+- [🔌 API Endpoints](#-api-endpoints)
+- [📁 Project Structure](#-project-structure)
+- [🧪 Testing the API](#-testing-the-api)
+- [✅ To-Do (Optional Enhancements)](#-to-do-optional-enhancements)
+- [🤝 License](#-license)
+- [🙋‍♀️ Author](#-author)
 
 ---
 
 ## 🚀 Features
 
-- View fitness classes with timezone-adjusted timings
-- Book a class by ID with client name and email
-- View bookings by client email
-- Built using FastAPI
-- In-memory storage (no DB)
+- 📅 View all available fitness classes in your timezone
+- 🧾 Book a class
+- 📬 Retrieve bookings by email
+- 🌐 Timezone support with `pytz` and `datetime`
+- ✅ Input validation with Pydantic
+- 📄 Auto-generated interactive docs (Swagger & ReDoc)
 
 ---
 
-## ⚙️ Setup Instructions
+## 📦 Tech Stack
 
-### 1. Clone the Repository
+- **FastAPI** - Web framework
+- **Pydantic** - Request/response validation
+- **Uvicorn** - ASGI server
+- **Python 3.10+**
+
+---
+
+## 🛠️ Setup Instructions
+
+### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/yourusername/fitness_booking_api.git
-cd fitness_booking_api
+git clone https://github.com/your-username/fitness-booking-api.git
+cd fitness-booking-api
 ```
 
 ### 2. Set Up Virtual Environment
@@ -43,12 +67,14 @@ pip install -r requirements.txt
 ```
 
 ### 4. Run the API
-
 ```bash
 uvicorn main:app --reload
 ```
 
-The API will be running at [http://127.0.0.1:8000](http://127.0.0.1:8000)
+## 📍 Visit
+
+- **Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **ReDoc**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ---
 
@@ -62,7 +88,20 @@ Get a list of all fitness classes in your local timezone.
 
 - `tz`: Timezone (e.g. `Asia/Kolkata`, `UTC`)
 
----
+**Sample Response:**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Yoga Basics",
+    "instructor": "Asha",
+    "available_slots": 5,
+    "time": "2025-06-10 10:30:00",
+    "timezone": "Asia/Kolkata"
+  }
+]
+```
 
 ### `POST /book`
 
@@ -73,63 +112,80 @@ Book a spot in a class.
 ```json
 {
   "class_id": 1,
-  "client_name": "Vyshnavi",
-  "client_email": "vyshu@example.com"
+  "client_name": "John Doe",
+  "client_email": "john@example.com"
+}
+```
+**Response:**
+
+```json
+{
+  "class_id": 1,
+  "client_name": "John Doe",
+  "client_email": "john@example.com"
 }
 ```
 
----
+### `GET /bookings?client_email=john@example.com`
 
-### `GET /bookings?client_email=vyshu@example.com`
-
-View all bookings made by a specific client.
+Retrieve all bookings made by a specific client.
 
 **Query Parameters:**
 
-- `client_email`: Email of the client
+- client_email: Email of the client
 
----
+**Sample Response:**
 
-## 📁 Project Structure
-
+```json
+[
+  {
+    "class_id": 1,
+    "client_name": "John Doe",
+    "client_email": "john@example.com"
+  }
+]
 ```
+### 📁 Project Structure
+
 fitness_booking_api/
 │
 ├── main.py               # Entry point with routes and logic
-├── models.py             # Pydantic models
-├── seed_data.py          # In-memory class data
-├── requirements.txt      # Python dependencies
-├── README.md             # Project documentation
-└── .gitignore            # Git ignore rules
+├── routes/
+│   └── booking_routes.py # API route definitions
+├── services/
+│   └── booking_service.py # Business logic
+├── models/
+│   └── response_models.py # Pydantic models
+├── utils/
+│   └── timezone.py       # Timezone conversion logic
+├── seed_data.py          # In-memory data
+├── requirements.txt      # Project dependencies
+└── README.md             # Project documentation
+
+### 🧪 Testing the API
+Use Postman or curl to test your API.
+
+Example using curl:
+
+```bash
+
+curl -X GET "http://localhost:8000/classes?tz=Asia/Kolkata" -H "accept: application/json"
 ```
 
----
+### ✅ To-Do (Optional Enhancements)
+- 🗄️ Add persistent storage (SQLite/PostgreSQL)
 
-## 📌 Notes
+- 🔐 Add user authentication (e.g. JWT)
 
-- This project uses in-memory lists for class and booking storage — no database involved.
-- All data will reset on app restart.
-- Useful for demos, prototypes, or learning FastAPI.
+- 📬 Send email confirmations on booking
 
----
+- 📊 Admin dashboard to manage classes and bookings
 
-## ✅ To-Do (Optional Enhancements)
+- 🐳 Dockerize the project
 
-- Add persistent storage (SQLite/PostgreSQL)
-- Add authentication
-- Add booking conflict checks
-- Add pagination for class list
-- Dockerize the project
-
----
-
-## 🤝 License
-
+### 🤝 License
 This project is open-source and free to use under the MIT License.
 
----
-
-## 🙋‍♀️ Author
-
-**Vyshnavi Kunapareddy**
+### 🙋‍♀️ Author
+Vyshnavi Kunapareddy
 Python Developer & Builder of Neat Little Tools 🛠️

@@ -6,6 +6,19 @@ from datetime import datetime
 from fastapi import HTTPException
 
 def convert_to_timezone(class_info: Dict, tz: str) -> Dict:
+    """
+    Converts the 'time' field in the class object to the specified timezone.
+
+    Args:
+        class_obj (dict): Class dictionary with UTC datetime.
+        tz (str): Target timezone string.
+
+    Returns:
+        dict: Updated class object with timezone-aware datetime.
+
+    Raises:
+        Exception: If timezone conversion fails.
+    """
     try:
         user_tz = pytz.timezone(tz)
     except pytz.UnknownTimeZoneError:
