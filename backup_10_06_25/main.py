@@ -1,13 +1,4 @@
-# main.py
-from fastapi import FastAPI
-from routes import booking
-
-app = FastAPI()
-app.include_router(booking.router)
-
-
-
-'''from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query
 from typing import List, Optional
 from database import fitness_classes, bookings
 from schemas import FitnessClass, BookingRequest, Booking
@@ -70,5 +61,5 @@ def get_bookings(client_email: str):
     if not filtered:
         raise HTTPException(status_code=404, detail="No bookings found for this email")
     print("Filtered bookings:", filtered)  # debug line
-    return filtered'''
+    return filtered
 
