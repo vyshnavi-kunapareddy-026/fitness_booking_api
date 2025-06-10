@@ -146,7 +146,7 @@ Retrieve all bookings made by a specific client.
 ]
 ```
 ### 📁 Project Structure
-
+```bash
 fitness_booking_api/
 │
 ├── main.py               # Entry point with routes and logic
@@ -161,6 +161,7 @@ fitness_booking_api/
 ├── seed_data.py          # In-memory data
 ├── requirements.txt      # Project dependencies
 └── README.md             # Project documentation
+```
 
 ### 🧪 Testing the API
 Use Postman or curl to test your API.
