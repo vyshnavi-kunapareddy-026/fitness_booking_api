@@ -8,8 +8,7 @@ fitness_booking_api/
 ├── services/                 #  Business logic layer
 │   └── booking_service.py    #    Handles booking, validation, timezone logic
 │
-├── models/                   #  Pydantic schemas
-│   └── response_models.py    #    Request & response models
+├── models.py                 #    Request & response models
 │
 ├── utils/                    #  Utility functions
 │   └── timezone.py           #    Timezone conversion logic
